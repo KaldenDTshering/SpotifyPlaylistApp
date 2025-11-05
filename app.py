@@ -4,6 +4,9 @@ import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
+contents = "Task: Need a list of 15 songs, no need for any extra response, just a list as per the description seperated by ;. Constraints: Use the Description given later to get the songs. Description: "
+
+
 
 #Spotify Auth
 CLIENT_ID = "68b20273e5014771a020054bbfd16e4b"
@@ -37,24 +40,24 @@ client = genai.Client(api_key="AIzaSyC0TLFI2LTF3wl_uI0257w4CIsOO_Zq8o8")
 
 #Setting up StreamLit Page
 st.set_page_config(page_title="Spotify Playlist Creator", page_icon="🎧", layout="centered")
-st.title("Spotify Playlist Creator with AI")
-st.text("Enter Prompt Below")
-user_input = st.text_input(label="Prompt")
+st.header("Spotify Playlist Creator with AI")
+st.subheader("This apps allows you to generate a new playlist based on your requirements so that your playlist remains fresh!")
+
+st.link_button("Link to the Spotify Playlist", "https://open.spotify.com/playlist/5g8HbxMydMbjbafbtOWRt6?si=f85b1b04dcbf45c4")
+user_input = st.text_input(label="Enter your Prompt")
 if st.button("Process"):
     result = user_input
-
     #Feed user response as prompt
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents="I am creating a playlist and based on the description Just give me a list of 15 songs separated by a ;. I Don't want any extra response Description: "+ result
+        contents= contents + result
     )
     #Response Formatting
     song_list = [response.text.split(";")]
     df = pd.DataFrame(song_list)
     df_transposed = df.transpose()
     st.write(df_transposed)
-
-
+    # st.html('< iframe data - testid = "embed-iframe" style = "border-radius:12px" src = "https://open.spotify.com/embed/playlist/5g8HbxMydMbjbafbtOWRt6?utm_source=generator" width = "100%" height = "352" frameBorder = "0" allowfullscreen = "" allow = "autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading = "lazy" > < / iframe >')
     #Remove All songs from the playlist
     # tracks_to_remove = []
     # remove_uri = sp.playlist_items(playlist_id, fields=None, limit=100, offset=0, market=None, additional_types=('track', 'episode'))
@@ -74,6 +77,11 @@ if st.button("Process"):
 
     # Now configuring spotify
     sp.playlist_replace_items(playlist_id=playlist_id, items=song_uri)
+
+
+
+
+st.text("P.S. if your initals are PNC and your birthday's on the 16th, pls call")
 
 
 
