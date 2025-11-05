@@ -3,13 +3,13 @@ from google import genai
 import pandas as pd
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import os
-from dotenv import load_dotenv
+
 
 #Spotify Auth
 CLIENT_ID = "68b20273e5014771a020054bbfd16e4b"
 CLIENT_SECRET = "5caf2b74eedd4d01a57eb381898ed52f"
-load_dotenv()
+
+
 #Chrome Header
 header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36"
